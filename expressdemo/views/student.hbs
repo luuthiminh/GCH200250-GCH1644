@@ -3,27 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Page</title>
 </head>
 <body>
-    <h1 style ="color: pink">This is page Student</h1>
-       <a href="/" style="font-size: 20px"; "color: gray">Main page</a>
-       <br>
-       <form action = "/"registerLunch" method="post">
-       Name : <input type = "text" name = "txtName">
-       <br>
-       Chossing Food
-       <select name ="foods"
-         <b>
-         {{#each foods}}
-         <opition value="{{this}}">{{this}}</opition>
-         {{/each}}
-       </b>
-       </select>
-       <br>
-       <input type="submit" value="Register">
-       </form>
-        <hr>
+    <h1>This is student page</h1>
+    <a href="/">Main page</a>
+    <h1>Menu</h1>
+    {{!-- <ul>
+        {{#each food}}
+        <li>{{this}}</li>
+        {{/each}}
+    </ul> --}}
+
+    <form action="/registerLunch" method="post">
+    Name: <input type="text" name="txtName">
+    <br>
+    Choosing Food
+    <select name="foods">
+        {{#each foods}}
+        <option value="{{this}}">{{this}}</option>
+        {{/each}}
+    </select>
+    <input type="submit" value="Regis">
+    </form>
 </body>
 </html>
