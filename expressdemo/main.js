@@ -13,9 +13,10 @@ app.get('/student', function(req, res){
     let foods = ['Com ', 'Bo ', 'Ga ', 'Mi tom']
     let food2 = []
     for(i = 0; i <foods.length; i++){
-        food2.push(foods[i].toUpperCase())
+        // food2.push(foods[i].toUpperCase())
+        foods[i] = foods[i].toUpperCase()
     }
-    res.render('student', {'foods': food2})
+    res.render('student', {'foods': foods})
 })
 
 app.listen(5000)

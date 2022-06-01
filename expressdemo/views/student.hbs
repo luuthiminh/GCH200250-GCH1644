@@ -10,13 +10,20 @@
     <h1 style ="color: pink">This is page Student</h1>
        <a href="/" style="font-size: 20px"; "color: gray">Main page</a>
        <br>
-       <b>
-<ul class="food_list">
-  {{#each foods}}
-    <li>{{this}}</li>
-  {{/each}}
-  </ul>
-   </b>
-
+       <form action = "/"registerLunch" method="post">
+       Name : <input type = "text" name = "txtName">
+       <br>
+       Chossing Food
+       <select name ="foods"
+         <b>
+         {{#each foods}}
+         <opition value="{{this}}">{{this}}</opition>
+         {{/each}}
+       </b>
+       </select>
+       <br>
+       <input type="submit" value="Register">
+       </form>
+        <hr>
 </body>
 </html>
