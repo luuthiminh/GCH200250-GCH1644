@@ -1,16 +1,17 @@
 var express = require('express')
-const res = require('express/lib/response')
-const { redirect } = require('express/lib/response')
 var app = express()
 
+app.set('view engine', 'hbs')
+
 app.get('/', function(req, res){
-    res.write('hello word')
-    res.end()
+    let n = new Date()
+    let name = "Minh Luu Thi"
+    res.render('home', {'now': n, 'name' : name})
 })
 
 app.get('/student', function(req, res){
-    res.write('Student page')
-    res.end()
+
+    res.render('student')
 })
 
 app.listen(5000)
