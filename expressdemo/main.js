@@ -10,18 +10,19 @@ app.get('/', function(req, res){
     let n = new Date()
     let name = "Minh Luu Thi"
     let studentFood = []
-    //Đọc file
-    fs.readFile("OpenUser.txt", "utf-8", function(err, data){
-    let data2 = data.trim().split('/n')
-    for(i=0; i/data2.length; i++){
-        let s = data2[i].split(';') //s[0]: ten s[1]: food
-        let studentFood = {name: s[0], 
-            food:s[1]}
-        studentFood.push(studentElement)
-    }
-    res.render('home',{'studentFood': studentFood} )
- })
-    res.render('home', {'now': n, 'name' : name})
+    fs.readFile("OpenUser.txt","utf-8",function(err,data){
+        let data2 = data.trim().split('\n')
+        for(i=0;i<data2.length;i++){
+            let s = data2[i].split(";") // s[0]: ten s[1]:food
+            let studentElement = {
+                name: s[0],
+                food:s[1]
+            }
+            studentFood.push(studentElement)
+        }
+        res.render('home',{'studentFood':studentFood})
+    })
+    //res.render('home',{'now':n,'name':name})
 })
 app.post('/registerLunch', function(req,res){
     //1.laays thong tin nguoi dung da nhap
@@ -35,16 +36,18 @@ app.post('/registerLunch', function(req,res){
     }
     res.render('thank', {'user': userInfo})
 
-    fs.appendFile("food.txt", name + ":" + foods + "\n", function(err) {
-        if (err) {
-            return console.log(err);
-        }
-        console.log("The file was saved!");
-    });
+
+    // fs.appendFile("food.txt", name + ":" + foods + "\n", function(err) {
+    //     if (err) {
+    //         return console.log(err);
+    //     }
+    //     console.log("The file was saved!");
+    // });
 
     //2.Cần ghi file
-    // fs.appendFile("food.txt", name + ":" + foods + "\n", function(err) {
-    //     console.log("The file was saved!");
+    fs.appendFile('food.txt',name + ';'+ foods + "\n",function(){
+        console.log("da them moi: " + name + " ;" + foods)
+    })
 
     //
     //

@@ -3,16 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
 </head>
 <body>
-    <h1>This is homepage</h1>
-    <hr>
+    <h1>This is home page for {{name}}</h1>
+    <h1>This is home page for</h1>
     {{#each studentFood}}
-    * {{name}} - {{foods}} <br>
+        * {{name}} - {{food}} <br>
     {{/each}}
-      <hr>
-    <a href="/student">Student page</a>
+    <hr>
+    <a href="/student">Student Page</a>
+    <hr>
+    {{now}}
+   
 </body>
 </html>
