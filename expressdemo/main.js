@@ -24,6 +24,11 @@ app.get('/', function(req, res){
     })
     //res.render('home',{'now':n,'name':name})
 })
+app.get('/index', function(req,res){
+    let name = "Minh Luu Thi"
+    res.render('index', {'name': name})
+})
+
 app.post('/registerLunch', function(req,res){
     //1.laays thong tin nguoi dung da nhap
     let name = req.body.txtName
