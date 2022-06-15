@@ -1,40 +1,52 @@
 var express = require('express')
-const { listen } = require('express/lib/application')
+const req = require('express/lib/request')
 const res = require('express/lib/response')
+const async = require('hbs/lib/async')
 var app = express()
-var MongoClient = require('mongodb').MongoClient
-var url = "http://127.0.0.1/27017"
 
-app.get("/insert",(req, res)=>{
-    res.render("newProduct")
-})
 app.set('view engine', 'hbs')
 app.use(express.urlencoded({extended:true}))
 
+var MongoClient = require('mongodb').MongoClient
+var url = 'mongodb://127.0.0.1/27017'
 
-app.post('/newProduct', async(req, res)=>{
+app.get('viewAll', async (req, res)=>{
+    let server = await MongoClient.connect(url)  
+    let dbo = server.db("ATNToys")
+    //find k mô tả ddk, lên lấy allproduct
+    let products = await dbo.collection.apply('product').find().toArray()
+    res.render('allProduct',{'product':products})
+})
+
+
+app.get('/', (req, res)=>{
+    res.render('home')
+})
+
+app.get('/insert', (req, res)=>{
+    res.render('newProduct')
+})
+
+app.post('/newProduct', async (req,res)=>{
     let name = req.body.txtName
     let price = req.body.txtPrice
     let picture = req.body.txtPicture
-    let product= {
-           'name' : name,
-           'price' : price,
-           'picture' : picture
+    let product = {
+        'name' : name,
+        'price' : price,
+        'picture' : picture
     }
-    //Kết nối đến server có địa chỉ url
-    let server = await MongoClient.connect(url)
-    //Truy cập đến Databay ATMToys
-    let dbo = server.db("ATMToys")
+    //1. kết nối đến server có địa chỉ trong url
+    let server = await MongoClient.connect(url) // await là đợi công việc này hoàn thành mới làm công việc tiếp theo. 
+                                                //phải có async mới dùng được await 
+    //2. truy cập database ATNToys
+    let dbo = server.db("ATNToys")
     //insert product vao database
-    //Đợi hoàn thành bằng sử dụng await
-    await dbo.collections("product").insert(product)
-    //Quay lại trang home
-    res.redirect("/")
+    await dbo.collection("product").insertOne(product)
+    //quay lai trang Home
+    res.redirect('/')
 })
 
-app.get('/',(req, res)=>{
-    res.render('home')
-})
-const PORT = process.env.PORT || 5000
-app.listen(PORT)
-console.log('Server is running')
+const POST = process.env.PORT || 3000
+app.listen(POST)
+console.log('Server is RUNNING!!!')
