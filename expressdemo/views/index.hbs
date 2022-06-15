@@ -7,10 +7,15 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Welcome {{name}} to homepage</h1>
+    <h1 style="color: rgb(208, 149, 184);"> Welcome {{name}} to homepage</h1>
+     {{#each product}}
+        * {{name}} -  <img src = "image/{{product}}" alt="Xinh dep tuyet voi:)))" width="auto" height="500"><br>
+    {{/each}}
+   
+
 </body>
 <script>
-    for(i=0; i<3; i++){
+    for(i=0; i<1; i++){
         alert('Enjoy this moment')
     }
 </script>

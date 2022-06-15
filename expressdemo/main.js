@@ -1,6 +1,7 @@
 var express = require('express')
 var app = express()
 var fs = require("fs"); 
+app.use(express.static('public'))
 
 
 app.set('view engine', 'hbs')
@@ -26,13 +27,30 @@ app.get('/', function(req, res){
 })
 app.get('/index', function(req,res){
     let name = "Minh Luu Thi"
-    res.render('index', {'name': name})
+    let product = []
+    fs.readFile("data.txt","utf-8",function(err,data){
+        let data2 = data.trim().split('\n')
+        for(i=0;i<data2.length;i++){
+            let s = data2[i].split(";") // s[0]: ten s[1]:image
+            if(s[1].trim().endsWith('.jpg') || s[1].trim().endsWith('.png')) {
+            let studentElement = {
+                name: s[0],
+                product:s[1]
+            } 
+            
+            product.push(studentElement)
+        }
+        }
+        res.render('index',{'product':product})
+    })
 })
+
 
 app.post('/registerLunch', function(req,res){
     //1.laays thong tin nguoi dung da nhap
     let name = req.body.txtName
     let foods = req.body.foods
+
     //2.Can ghi vao file
     //3/Hien thi dang ki thanh cong
     let userInfo = {
@@ -53,7 +71,9 @@ app.post('/registerLunch', function(req,res){
     fs.appendFile('food.txt',name + ';'+ foods + "\n",function(){
         console.log("da them moi: " + name + " ;" + foods)
     })
-
+    // fs.appendFile('data.txt',name + ';'+ product + "\n",function(){
+    //     console.log("da them moi: " + name + " ;" + product)
+    // })
     //
     //
 // Tự làm đọc ghi file
@@ -94,5 +114,6 @@ app.get('/student', function(req, res){
 })
 
 
-app.listen(5000)
-console.log('Server is running')
+const PORT = process.env.PORT || 5000
+app.listen(PORT)
+console.log("server is running")
