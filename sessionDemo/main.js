@@ -9,21 +9,22 @@ app.use(session({
     resave: false
 }))
 
+
+
 app.get('/',(req,res)=>{
     let accessCount = req.session.accessCount || 0  //lấy giá trị session ra bằng biến accessCount, nếu chưa có sẽ gán bằng 0
     accessCount++ //nếu có rồi thì sẽ tăng lên 1
     req.session.accessCount = accessCount //gán lại cho biến accessCount
-    let chuaDangNhap = !req.session.userName
+    let chuaDangNhap = !req.session.userName //Check nếu name chưa có(dùng !)
 
     res.render('home', {'accessCount': accessCount, 'chuaDangNhap':chuaDangNhap})
 })
 
 app.post('/register', (req, res)=>{
-    let name = req.body.txtName
-    req.session.userName = name
+    let name = req.body.txtName //Lấy name tại ô text
+    req.session.userName = name //Lấy giá trị name gắn vào session
 
-    let chuaDangNhap = !req.session.userName
-    res.render('profile', {'name': req.session.userName, 'chuaDangNhap':chuaDangNhap})
+    res.render('profile', {'name': req.session.userName})
 })
 
 app.get('/profile', (req, res)=>{

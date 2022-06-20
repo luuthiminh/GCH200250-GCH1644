@@ -7,10 +7,11 @@
     <title>My profile</title>
 </head>
 <body>
-    <h1>Welcome {{name}}</h1>
+    {{#if name }}
+    <h1>Wellcome {{name}}</h1>
+    {{else}}
+    <h2>Yeu cau dang nhap</h2>
+    {{/if}}
     <a href="/">Back to Homepage</a>
-    <h2>Ban chua dang nhap{{chuaDangNhap}}</h2>
-     <a href="/">Back to Homepage</a>
-     
 </body>
 </html>
