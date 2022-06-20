@@ -9,6 +9,9 @@ app.use(session({
     resave: false
 }))
 
+var MongoClient = require('mongodb').MongoClient
+var url = 'mongodb://127.0.0.1/27017'
+
 
 
 app.get('/',(req,res)=>{
@@ -23,6 +26,11 @@ app.get('/',(req,res)=>{
 app.post('/register', (req, res)=>{
     let name = req.body.txtName //Lấy name tại ô text
     req.session.userName = name //Lấy giá trị name gắn vào session
+    
+
+    let server = await MongoClient.connect(url)
+    let dbo = server.db("ATNToys")
+    let user = await dbo.collection('user').find({'name': new RegExp(name, 'i')}).toArray()
 
     res.render('profile', {'name': req.session.userName})
 })
