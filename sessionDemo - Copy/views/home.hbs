@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+</head>
+<body>
+    <h1> Heluuuu Baby </h1>
+    <h1>Ban da truy cap trang {{accessCount}} lan trong phien lam viec!!!</h1>
+    {{#if chuaDangNhap}}
+        <form action="/register" method="post">
+            Tell me your name : <input type="text" name="txtName">
+            <br>
+            <br>
+            Tell me your password :<input type="text" name="txtPassword">
+            <input type="submit" value="Ok, I agreed!">
+        </form>
+    {{/if}}
+
+    <p>
+        <a href="/profile">See my profile!</a>
+    </p>
+</body>
+</html>
