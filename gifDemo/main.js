@@ -12,7 +12,10 @@ app.set('view engine', 'hbs')
 
 app.use(express.urlencoded({extended:true}))
 
-
+app.get('/', (req, res)=>{
+    let name = req.body.txtName
+    res.render('index', {'name': name})
+})
 
 
 const PORT = process.env.PORT || 5000
