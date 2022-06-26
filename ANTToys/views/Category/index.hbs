@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
     integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -16,6 +15,7 @@
     crossorigin="anonymous"></script>
   <title>Category Toy</title>
 </head>
+<h1>hello</h1>
 <style>
   .fixed-top {
     background: black;
@@ -32,7 +32,6 @@
 </style>
 
 <div class="container">
-  <h1 class="display-4">.</h1>
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark-custom">
     <div class="container">
 
@@ -57,8 +56,8 @@
           <a class="nav-link dropdown-toggle" href="#" id="bookDropdown" role="button" data-toggle="dropdown"
              aria-haspopup="true" aria-expanded="false">Category </a>
           <div class="dropdown-menu" aria-labelledby="bookDropdown">
-            <a class="dropdown-item" href="{{route('admin.index')}}">View All</a>
-            <a class="dropdown-item" href="{{route('category.create')}}">New Category</a>
+            <a class="dropdown-item" href="/category">View All</a>
+            <a class="dropdown-item" href="/insertCat">New Category</a>
           </div>
         </li>
           <li class="nav-item">
@@ -99,15 +98,36 @@
       </div>
     </div>
   </nav>
+  
   <body>
-  <div class="form-group">
-  <label for="author" class="font-weight-bold">Category Name</label>
-  <input type="text" class="form-control" id="cname" name="Cat_name" value="{{Cat_name}}">
-</div>
-
-<div class="form-group">
-  <label for="pages" class="font-weight-bold">Category Description</label>
-  <input type="text" class="form-control" id="cdescription" name="Cat_description" min="0" value="{{Cat_description}}">
-</div>
- </body>
- </html>
+    <div class="container">
+      <h1 class="display-4">Manage Category</h1>
+      <table class="table table-hover">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">&nbsp;</th>
+            <th scope="col">&nbsp;</th>
+            <th scope="col">&nbsp;</th>
+          </tr>
+        </thead>
+         <tbody>
+          {{#each categories}}
+          <tr>
+            <td>{{name}}</td>
+            <td>{{description}}</td>
+            <td><a type="button" class="btn btn-primary btn-sm" href="/detail/{{_id}}">Details</a>
+            </td>
+            <td><a type="button" class="btn btn-success btn-sm" href="/update/{{_id}}">Edit</a>
+            </td>
+            <td>
+              <a type="button" class="btn btn-danger btn-sm" href="/delete/{{_id}}">Delete</a>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+</body>
+</html>

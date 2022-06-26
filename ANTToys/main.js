@@ -78,17 +78,12 @@ app.post('/create', async (req,res)=>{
         'description': description,
         'picture' : picture
     }
-    //1. ket noi den server co dia chi trong url
     let server = await MongoClient.connect(url)
-    //truy cap Database ATNToys
     let dbo = server.db("ATNToys")
-    //insert Toy
     await dbo.collection("Toy").insertOne(toys)
-    //quay lai trang home
     res.redirect('/')
 })
 
-//Gọi hàm lên gg, bên nav
 app.get('/insert',(req,res)=>{
     res.render("create")
 })
@@ -140,6 +135,48 @@ app.get('/delete/:_id', async (req, res) => {
     res.redirect('/')
 })
 
+
+
+
+//Category
+app.get('/category', async(req,res)=>{
+    let cname = req.body.Cat_name
+    let cdescription = req.body.Cat_description
+    let categories = {
+        'name': cname,
+        'description' : cdescription
+    }
+       //1. ket noi den server co dia chi trong url
+       let server = await MongoClient.connect(url)
+       //truy cap Database ATNToys
+       let dbo = server.db("ATNToys")
+       //insert Toy
+       let toy = await dbo.collection("Category").find().toArray()
+       //quay lai trang home
+    res.render('Category/index',{'categories':categories})
+})
+
+app.post('/createCat', async (req,res)=>{
+    let cname = req.body.Cat_name
+    let cdescription = req.body.Cat_description
+    let categories = {
+        'name': cname,
+        'description': cdescription
+    }
+    //1. ket noi den server co dia chi trong url
+    let server = await MongoClient.connect(url)
+    //truy cap Database ATNToys
+    let dbo = server.db("ATNToys")
+    //insert Toy
+    await dbo.collection("Category").insertOne(categories)
+    //quay lai trang home
+    res.redirect('/category')
+})
+
+//Gọi hàm lên gg, bên nav
+app.get('/insertCat',(req,res)=>{
+    res.render("Category/create")
+})
 
 
 const PORT = process.env.PORT || 5000
