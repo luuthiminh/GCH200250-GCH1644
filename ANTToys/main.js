@@ -99,6 +99,7 @@ app.get('/update/:_id', async (req, res) => {
     //2. truy cập database ATNToys
     let dbo = server.db("ATNToys")
     let toys = await dbo.collection('Toy').find({ '_id': good_id}).limit(1).toArray()
+    console.log(toys[0])
     res.render('edit', {'toys': toys[0]})
 })
 
@@ -117,7 +118,7 @@ app.post('/edit/:_id', async (req, res) => {
     //phải có async mới dùng được await 
     //2. truy cập database ATNToys
     let dbo = server.db("ATNToys")
-    let toys = await dbo.collection('Toy').updateOne({ '_id': good_id }, {$set:{'_id': good_id,'name': txtName, 'price': txtPrice, 'description': txtDescription, 'picture': txtPicture}})
+    let toys = await dbo.collection('Toy').updateOne({ '_id': good_id }, {$set:{'_id': good_id,'name': name, 'price': price, 'description': description, 'picture': picture}})
     res.redirect('/')
 })
 
@@ -134,6 +135,19 @@ app.get('/delete/:_id', async (req, res) => {
     await dbo.collection('Toy').deleteOne({'_id': good_id})
     res.redirect('/')
 })
+
+// app.get('/delete/:_id', async (req, res)=>{
+//     //transform your param into an ObjectId
+//     var id = req.params._id;
+//     var good_id = new ObjectId(id);
+//     //1. kết nối đến server có địa chỉ trong url
+//     let server = await MongoClient.connect(url) // await là đợi công việc này hoàn thành mới làm công việc tiếp theo. 
+//     //phải có async mới dùng được await 
+//     //2. truy cập database ATNToys
+//     let dbo = server.db("ATNToys")
+//     let toys = await dbo.collection('Toy').find({ '_id': good_id}).limit(1).toArray()
+//     res.render('delete', {'toys': toys[0]})
+// })
 
 
 
