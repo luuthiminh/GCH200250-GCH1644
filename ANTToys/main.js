@@ -46,15 +46,14 @@ app.post('/search',async (req,res)=>{
 })
 
 app.get('/detail/:_id',async (req,res)=>{
-    var id = req.params._id;
-    var good_id = new ObjectId(id);
+    var toy_id = new ObjectId(req.params._id);
 
     //1. ket noi den server co dia chi trong url
     let server = await MongoClient.connect(url)
     //truy cap Database ATNToys
     let dbo = server.db("ATNToys")
     //get data
-    let toys = await dbo.collection('Toy').find({ '_id': good_id}).toArray()
+    let toys = await dbo.collection('Toy').find({ '_id': toy_id}).toArray()
     res.render('detail',{'toys':toys})
 })
 
@@ -90,13 +89,10 @@ app.get('/insert',(req,res)=>{
 
 
 app.get('/update/:_id', async (req, res) => {
-    //transform your param into an ObjectId
     let id = req.params._id;
     let good_id = new ObjectId(id);
-    //1. kết nối đến server có địa chỉ trong url
-    let server = await MongoClient.connect(url) // await là đợi công việc này hoàn thành mới làm công việc tiếp theo. 
-    //phải có async mới dùng được await 
-    //2. truy cập database ATNToys
+    let server = await MongoClient.connect(url) 
+    
     let dbo = server.db("ATNToys")
     let toys = await dbo.collection('Toy').find({ '_id': good_id}).limit(1).toArray()
     console.log(toys[0])
@@ -109,14 +105,10 @@ app.post('/edit/:_id', async (req, res) => {
     let description = req.body.txtDescription
     let picture = req.body.txtPicture
 
-    //transform your param into an ObjectId
     var id = req.params._id;
     var good_id = new ObjectId(id);
 
-    //1. kết nối đến server có địa chỉ trong url
-    let server = await MongoClient.connect(url) // await là đợi công việc này hoàn thành mới làm công việc tiếp theo. 
-    //phải có async mới dùng được await 
-    //2. truy cập database ATNToys
+    let server = await MongoClient.connect(url) 
     let dbo = server.db("ATNToys")
     let toys = await dbo.collection('Toy').updateOne({ '_id': good_id }, {$set:{'_id': good_id,'name': name, 'price': price, 'description': description, 'picture': picture}})
     res.redirect('/')
