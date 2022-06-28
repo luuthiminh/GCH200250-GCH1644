@@ -185,6 +185,38 @@ app.get('/insertCat',(req,res)=>{
 })
 
 
+app.get('/searchStudent', async(req,res)=>{
+       //1. ket noi den server co dia chi trong url
+       let server = await MongoClient.connect(url)
+       //truy cap Database ATNToys
+       let dbo = server.db("Grade")
+       //insert Toy
+       let students = await dbo.collection("Student").find().toArray()
+       //quay lai trang home
+    res.render('search',{'students':students})
+})
+app.post('/searchs',async (req,res)=>{
+    let name = req.body.Search
+    //1. ket noi den server co dia chi trong url
+    let server = await MongoClient.connect(url)
+    //truy cap Database ATNToys
+    let dbo = server.db("Grade")
+    //get data
+    let result = await dbo.collection("Student").find({'name': new RegExp(name,'i')}).toArray()
+    if(result == 0){
+        res.write('Khong co ket qua')
+        res.end()
+    }else{
+        let firstStudent = result[0]
+        // res.render('search',{'result': result2})
+
+        console.log(firstStudent._id)
+        let result2 = await dbo.collection("Grade").find({'studentId':firstStudent._id}).toArray()
+        res.render('search',{'result2': result2})
+    }
+   
+})
+
 const PORT = process.env.PORT || 5000
 app.listen(PORT)
 console.log('SERVER IS RUNNING')
